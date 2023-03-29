@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../firebase/AuthContext';
+
 
 const Header = () => {
+    const {user, LogOut} = useContext(UserContext)
+
+    const handleLogout = () => {
+        LogOut()
+        .then( ()=>{
+            console.log('user log out')
+        })
+        .catch(error => console.error(error))
+    }
+
     return (
         <div>
             <div className="navbar bg-slate-200 flex justify-between mb-5">
@@ -10,23 +23,26 @@ const Header = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>Home</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Type of house</a></li>
-                        <li><a>Contact</a></li>
+                        <li><Link to='/'>Home</Link></li>
+                        <li><Link to='/about'>About</Link ></li>
+                        <li><Link to='/houses'>Type of house</Link ></li>
+                        <li><Link to='/contact'>Contact</Link ></li>
                         </ul>
                     </div>
-                    <a className="btn hover:btn-primary normal-case text-xl">Hotel Mehbub</a>
+                    <Link to='/' className="btn hover:btn-primary normal-case text-xl">Hotel Mehbub</Link >
                 </div>
                 <div className="navbar-center hidden lg:flex ">
-                    <ul className="menu menu-horizontal px-1">
-                        <li><a>Home</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Type of house</a></li>
-                        <li><a>Contact</a></li>
+                    <ul className="menu menu-horizontal px-1 ">
+                        <li><Link to='/'>Home</Link ></li>
+                        <li><Link to='/about'>About</Link ></li>
+                        <li><Link to='/houses'>Type of house</Link ></li>
+                        <li><Link to='/contact'>Contact</Link ></li>
                     </ul>
                 </div>
-                <button className="btn btn-outline hover:btn-primary rounded-xl">Login</button>
+                {
+                    user?.uid ? <button className='btn btn-outline hover:btn-primary rounded-xl' onClick={handleLogout}>Logout</button> : <button className="btn btn-outline hover:btn-primary rounded-xl"><Link to='login'>Login</Link></button>
+                }
+                
             </div>
         </div>
     );
