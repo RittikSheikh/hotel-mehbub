@@ -1,3 +1,6 @@
 .hero{
-    height: 80vh;
+    height: 85vh;
+}
+.mama{
+    backface-visibility: hidden;
 }
